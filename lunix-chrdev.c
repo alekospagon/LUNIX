@@ -108,7 +108,7 @@ static int lunix_chrdev_state_update(struct lunix_chrdev_state_struct *state)
 		return -EAGAIN; 
 	}
 
-
+	/* =============== Upoloipo tmhma kwdika =============== */
 
 	/* =============== Take the data =============== */
 	switch(state->type) {
