@@ -173,12 +173,12 @@ static int lunix_chrdev_open(struct inode *inode, struct file *filp)
 
 	//Is it even accessible?
 	ret = -EACCES; 				
-	if(filp->f_mode & FMODE_WRITE) 	
+	if(filp->f_mode & FMODE_WRITE) 	//file is open for writing
 		goto out;
 
 	//Is it even here?
 	ret = -ENODEV;				
-	if ((ret = nonseekable_open(inode, filp)) < 0)
+	if ((ret = nonseekable_open(inode, filp)) < 0)	//no such device
 		goto out;
 
 	/* ==================== File is open now =================== */
