@@ -4,7 +4,7 @@
  * Implementation of character devices
  * for Lunix:TNG
  *
- * < Your name here >
+ * MY NAME HERE
  *
  */
 
@@ -181,7 +181,7 @@ static int lunix_chrdev_open(struct inode *inode, struct file *filp)
 	if ((ret = nonseekable_open(inode, filp)) < 0)	//no such device
 		goto out;
 
-	/* ==================== File is open now =================== */
+	/* ==================== File can open now ================== */
 	/* =============== Gather Sensor information =============== */
 
 	/*
@@ -193,10 +193,10 @@ static int lunix_chrdev_open(struct inode *inode, struct file *filp)
 
 	//Take minor nums
 	minor_num  = iminor(inode);				//take minor number from i-node
-	//Take sensor nums
+	//Take Major num and data type
 	sensor_num = minor_num / 8;				//sensor number
 	sensor_data_type = minor_num % 8;		//Type number
-	//Find sensor in sensors
+	//LINK IT WITH CORRECT SENSOR
 	sensor = &lunix_sensors[sensor_num];	//link with sensor
 
 	
@@ -228,6 +228,7 @@ static int lunix_chrdev_open(struct inode *inode, struct file *filp)
 
 	//for struct file information:
 	//https://github.com/torvalds/linux/blob/master/include/linux/fs.h
+	//my data is the state struct i made. 
 	filp->private_data 	= state;			
 	filp->f_pos 		= 0;
 
@@ -273,11 +274,12 @@ static ssize_t lunix_chrdev_read(struct file *filp, char __user *usrbuf, size_t 
 	/* =============== Link with sensor and state =============== */
 
 	//link state from file pointer
-	state = filp->private_data;
+	//see open func
+	state = filp->private_data;		//TAKE STATE
 	WARN_ON(!state);
 
 	//link sensor from state struct
-	sensor = state->sensor;
+	sensor = state->sensor;			//TAKE SENSOR
 	WARN_ON(!sensor);
 
 
